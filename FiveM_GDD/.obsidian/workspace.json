@@ -13,15 +13,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Willkommen.md",
+                "file": "Ressourcen/Basic Admin/UI.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Willkommen"
+              "title": "UI"
+            }
+          },
+          {
+            "id": "af04fdfb0c046733",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Ressourcen/Basic Admin/UI.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "UI"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       },
       {
         "id": "d3ce566ea16c3b6c",
@@ -204,8 +219,13 @@
       "bases:Neue Base erstellen": false
     }
   },
-  "active": "31c0a9caaa62f230",
+  "active": "af04fdfb0c046733",
   "lastOpenFiles": [
-    "Willkommen.md"
+    "Ressourcen/Basic Admin/Funktionen.md",
+    "Ressourcen/Basic Admin/Basic Admin.md",
+    "Ressourcen/Basic Admin/UI.md",
+    "Willkommen.md",
+    "Ressourcen/Basic Admin",
+    "Ressourcen"
   ]
 }
