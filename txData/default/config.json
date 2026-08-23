@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "general": {
+    "serverName": "JA-Server",
+    "language": "de"
+  },
+  "server": {
+    "dataPath": "D:/Entwicklung/FiveM-Server/txData/FiveMBasicServerCFXDefault_F10FDE.base/"
+  }
+}

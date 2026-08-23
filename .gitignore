@@ -1,0 +1,52 @@
+# ---------------------------------------------------------------------------
+# FXServer-Binärdistribution
+# ---------------------------------------------------------------------------
+# Kompletter Server-Build (FXServer.exe, DLLs, citizen/-Laufzeit, crashes/).
+# Wird über den txAdmin-/FiveM-Artifact-Deployer heruntergeladen, ist kein
+# eigener Code und wird nie von Hand angefasst -> nicht ins Repo.
+/server/
+
+# ---------------------------------------------------------------------------
+# txAdmin-Profildaten (txData/default/) – Laufzeit- & sensible Daten
+# ---------------------------------------------------------------------------
+/txData/default/logs/
+/txData/default/data/
+# txAdmin-Master-Account (enthält Passwort-Hash) – niemals versionieren
+/txData/admins.json
+
+# ---------------------------------------------------------------------------
+# Server-Basis (txData/FiveMBasicServerCFXDefault_F10FDE.base/)
+# ---------------------------------------------------------------------------
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/.replxx_history
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/cache/
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/db/
+
+# server.cfg enthält sv_licenseKey im Klartext -> sensibel, nicht versionieren.
+# Bei Bedarf stattdessen eine server.cfg.example mit Platzhalter-Key committen.
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/server.cfg
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/server.cfg.bkp
+
+# ---------------------------------------------------------------------------
+# Vorinstallierte/Default-Resources des Deployer-Recipes
+# ---------------------------------------------------------------------------
+# Das sind die vom "FiveM Basic Server"-Recipe mitgelieferten bzw. per
+# EasyAdmin-Installer nachgezogenen Resources – Fremdcode, der nicht editiert
+# wird und bei Bedarf neu heruntergeladen werden kann.
+# ACHTUNG: "[local]/" bewusst NICHT ignoriert – laut Recipe-Konvention ist das
+# die Kategorie für eigene/lokale Resources und aktuell noch leer. Dort landet
+# vermutlich die eigene Entwicklung. Falls künftig weitere Fremd-Resources
+# (z. B. neue Kategorie-Ordner) dazukommen, hier ergänzen statt pauschal die
+# ganze resources/-Ordner zu ignorieren.
+# Achtung: "[" und "]" sind in .gitignore Zeichenklassen-Syntax -> müssen
+# escaped werden, sonst greift das Pattern nicht (mit git status geprüft).
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/EasyAdmin/
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/\[gamemodes\]/
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/\[gameplay\]/
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/\[managers\]/
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/\[system\]/
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/\[test\]/
+
+# ---------------------------------------------------------------------------
+# Eigene Hilfslogs (z. B. manuelle Start-Logs außerhalb von txData/default/logs)
+# ---------------------------------------------------------------------------
+*.log
