@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Ressourcen/Basic Admin/UI.md",
+                "file": "01 Ressourcen/Basic Admin/UI.md",
                 "mode": "source",
                 "source": false
               },
@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Ressourcen/Basic Admin/UI.md",
+                "file": "00 Start/00 Das Game Design Dokument.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "UI"
+              "title": "00 Das Game Design Dokument"
             }
           }
         ],
@@ -219,13 +219,14 @@
       "bases:Neue Base erstellen": false
     }
   },
-  "active": "af04fdfb0c046733",
+  "active": "8f09bdb3a16c7ddf",
   "lastOpenFiles": [
-    "Ressourcen/Basic Admin/Funktionen.md",
-    "Ressourcen/Basic Admin/Basic Admin.md",
-    "Ressourcen/Basic Admin/UI.md",
-    "Willkommen.md",
-    "Ressourcen/Basic Admin",
-    "Ressourcen"
+    "00 Start",
+    "01 Ressourcen/Basic Admin/UI.md",
+    "01 Ressourcen/Basic Admin/Funktionen.md",
+    "01 Ressourcen/Basic Admin/Basic Admin.md",
+    "00 Start/00 Das Game Design Dokument.md",
+    "01 Ressourcen/Basic Admin",
+    "01 Ressourcen"
   ]
 }

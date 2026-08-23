@@ -1,0 +1,1 @@
+Hier werden die Features/Ressourcen für den FiveM Server beschrieben. Es dient als Game Design Dokument und beschreibt den aktuellen zustand der Features
