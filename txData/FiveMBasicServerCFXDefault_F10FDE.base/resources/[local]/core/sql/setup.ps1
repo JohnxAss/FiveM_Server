@@ -81,8 +81,6 @@ if ($LASTEXITCODE -ne 0) {
 
 # --- Schema einspielen ------------------------------------------------------
 foreach ($file in (Get-ChildItem -LiteralPath $sqlDir -Filter '0*.sql' | Sort-Object Name)) {
-    # 000 legt Datenbank/Benutzer an, das haben wir oben schon erledigt.
-    if ($file.Name -like '000_*') { continue }
     Write-Host "Spiele ein: $($file.Name)"
     Get-Content -LiteralPath $file.FullName -Raw | & $mysql -u root fivem
     if ($LASTEXITCODE -ne 0) {

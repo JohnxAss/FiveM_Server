@@ -127,9 +127,12 @@ Stand: 2026-08-24
 
 - **MariaDB** lokal (installiert per `winget install --id MariaDB.Server`), Zugriff über die
   Fremd-Resource **`oxmysql`** (Stand: 2.14.1, liegt in `resources/oxmysql/`, gitignored).
-- Datenbank und Benutzer heißen beide `fivem`, angelegt per
-  `resources/[local]/core/sql/000_datenbank_und_benutzer.sql`. Bewusst ein eigener Benutzer
-  statt `root`, und Zugriff bewusst nur von `localhost`.
+- Datenbank und Benutzer heißen beide `fivem`, angelegt von `core/sql/setup.ps1`. Bewusst
+  ein eigener Benutzer statt `root`, und Zugriff bewusst nur von `localhost`.
+- Es gibt bewusst **keine** SQL-Datei zum Anlegen von Datenbank/Benutzer: dort ersetzt man
+  den Passwort-Platzhalter durch ein echtes Passwort und hat es sofort in einer
+  versionierten Datei stehen (ist einmal passiert und wurde vor dem Commit abgefangen).
+  `setup.ps1` kommt ohne Platzhalter aus - Neuanlage nur darueber.
 - **Passwort-Zeichensatz beachten:** oxmysql parst den Verbindungsstring selbst (`parseUri`
   in `dist/build.js`) und **dekodiert kein URL-Encoding** – es splittet stumpf an `:` und
   dem At-Zeichen. Ein Passwort mit `@ : / ? # & ; = %` oder Leerzeichen zerlegt den String
