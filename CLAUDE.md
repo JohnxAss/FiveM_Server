@@ -29,6 +29,13 @@ Stand: 2026-08-24
   ```bash
   cd "/d/Entwicklung/FiveM-Server/server" && ./FXServer.exe +set serverProfile default
   ```
+  Dieselbe Zeile in PowerShell (der User arbeitet dort, nicht in der Bash):
+  ```powershell
+  cd "D:\Entwicklung\FiveM-Server\server"
+  .\FXServer.exe +set serverProfile default
+  ```
+  Achtung: Standard ist Windows PowerShell 5.1, das kennt **kein** `&&` - stattdessen `;`
+  oder zwei Zeilen. Das `.\` vor der Exe ist Pflicht.
 - txAdmin-Webpanel danach erreichbar unter `http://localhost:40120`.
 - Stoppen: `Strg+C` im Server-Fenster, oder "Stop Server" im txAdmin-Panel. (Ein im Hintergrund
   gestarteter Prozess lässt sich auch per `tasklist`/`taskkill` bzw. Stoppen der Bash-Background-
@@ -87,10 +94,16 @@ Stand: 2026-08-24
 - **`basic-admin`** – erstes eigenes Feature, dient als Blaupause. Spezifikation im GDD unter
   `FiveM_GDD/01 Ressourcen/Basic Admin/`. NUI-Menü (`/basicadmin`, dazu ein leeres
   `RegisterKeyMapping`, Taste selbst zuweisbar) mit Fahrzeug-Spawn und Teleport zum Wegpunkt.
-- **`core`** – *geplant, noch nicht implementiert.* Unterbau für alle weiteren Features:
-  Datenbank-Anbindung, Spielerdaten (Laden/Speichern/Autosave) und die gemeinsamen
-  Exports/Events/Callbacks. Spezifikation im GDD unter `FiveM_GDD/01 Ressourcen/Core/`.
-  Faustregel dort: etwas gehört nur in den Core, wenn mindestens zwei Features es brauchen
+- **`core`** – Unterbau für alle weiteren Features, Spezifikation im GDD unter
+  `FiveM_GDD/01 Ressourcen/Core/`. **Umgesetzt ist bisher nur die Maschinerie:**
+  Datenbank-Anbindung, `players`-Tabelle (Account + Spielzeit), Laden beim Connect per
+  Deferrals, Speichern bei Disconnect/Autosave/Shutdown, dazu Exports und die Events
+  `core:playerLoaded` / `core:playerDropped` / `core:playerSaved`.
+  **Bewusst noch nicht gebaut**, weil es dafür bisher keinen Konsumenten gibt: die
+  `characters`-Tabelle (Geld, Aussehen, Position), das Callback-System, Notifications und
+  Logging. Ein Schema für Features zu erfinden, die es noch nicht gibt, wird beim ersten
+  echten Feature ohnehin wieder umgebaut.
+  Faustregel: etwas gehört nur in den Core, wenn mindestens zwei Features es brauchen
   **oder** es genau einen Besitzer haben muss (z. B. Schreibzugriff auf die Spielerzeile in
   der DB). Kein eigenes UI, kein Gameplay.
 - Konventionen, die daraus hervorgehen und für weitere Resources gelten sollen:
@@ -110,10 +123,29 @@ Stand: 2026-08-24
   echte `server.cfg` ist wegen `sv_licenseKey` gitignored, die `.example` ist der versionierte
   Stand.
 
-## Datenbank (geplant, mit `core`)
+## Datenbank
 
-- **MariaDB/MySQL** lokal, Zugriff über die Fremd-Resource **`oxmysql`**. Noch nicht
-  installiert – kommt zusammen mit der `core`-Resource.
+- **MariaDB** lokal (installiert per `winget install --id MariaDB.Server`), Zugriff über die
+  Fremd-Resource **`oxmysql`** (Stand: 2.14.1, liegt in `resources/oxmysql/`, gitignored).
+- Datenbank und Benutzer heißen beide `fivem`, angelegt per
+  `resources/[local]/core/sql/000_datenbank_und_benutzer.sql`. Bewusst ein eigener Benutzer
+  statt `root`, und Zugriff bewusst nur von `localhost`.
+- **Passwort-Zeichensatz beachten:** oxmysql parst den Verbindungsstring selbst (`parseUri`
+  in `dist/build.js`) und **dekodiert kein URL-Encoding** – es splittet stumpf an `:` und
+  dem At-Zeichen. Ein Passwort mit `@ : / ? # & ; = %` oder Leerzeichen zerlegt den String
+  still, und der Fehler zeigt sich nur als nichtssagende Auth-Meldung. Erlaubt sind daher
+  nur Buchstaben, Ziffern und `- _ .`.
+- Setup-Helfer: `core/sql/setup.ps1` legt Datenbank und Benutzer an, spielt das Schema ein
+  und traegt den Verbindungsstring in die `server.cfg` ein. Er erzeugt das Passwort fuer den
+  Benutzer `fivem` selbst (aus dem sicheren Zeichensatz) und prueft den Zugang danach
+  bewusst **als dieser Benutzer**, nicht als root – sonst faellt ein kaputter
+  Verbindungsstring erst beim Serverstart auf.
+- Der Core legt **keine Tabellen automatisch an**. Beim Start prüft er nur, ob die in
+  `REQUIRED_TABLES` (`core/server/database.lua`) gelisteten Tabellen da sind, und meldet
+  fehlende deutlich in der Konsole. Einspielen von Hand, siehe `core/sql/README.md`.
+- **Ohne Datenbank kommt niemand auf den Server** (`Config.RejectWithoutDatabase = true` in
+  `core/config.lua`). Das ist Absicht: ein Spieler, der ohne Daten spawnt, überschreibt beim
+  nächsten Save seinen echten Fortschritt. Zum Spielen ohne DB die Option auf `false` setzen.
 - **Nur der Core spricht mit der Datenbank.** Feature-Resources rufen `oxmysql` nicht direkt
   auf und schreiben kein eigenes SQL, sondern gehen über die Core-Exports. Grund: zwei
   Resources, die unabhängig dieselbe Spielerzeile schreiben, überschreiben sich gegenseitig.

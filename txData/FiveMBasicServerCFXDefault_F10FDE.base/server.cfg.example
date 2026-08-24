@@ -43,7 +43,8 @@ set ea_enableReportCommand "true"
 # MariaDB/MySQL-Zugang fuer die Core-Resource. Nur der Core spricht mit der DB,
 # alle Feature-Resources gehen ueber dessen Exports/Events (siehe GDD "Core").
 # Enthaelt Zugangsdaten -> in der echten server.cfg ausfuellen, hier Platzhalter.
-set mysql_connection_string "mysql://<DB_USER>:<DB_PASSWORT>@localhost/<DB_NAME>?charset=utf8mb4"
+# Benutzer/Datenbank werden per resources/[local]/core/sql/000_*.sql angelegt.
+set mysql_connection_string "mysql://fivem:<DB_PASSWORT>@localhost/fivem?charset=utf8mb4"
 
 ## These resources will start by default.
 ensure mapmanager

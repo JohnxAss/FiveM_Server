@@ -25,6 +25,10 @@ Daten bis zum Speichern beim Verlassen. Andere Features docken sich über die
 - Erst wenn die Daten vollständig geladen und angewendet sind, gilt der Spieler als bereit und
   der Core löst `core:playerLoaded` aus. Features dürfen vorher keine Spielerdaten erwarten.
 
+> **Stand:** Umgesetzt sind Verbindungsaufbau und Speichern. Der Abschnitt *Spawn* ist noch
+> Zielzustand – solange es keine `characters`-Tabelle gibt, spawnt weiterhin
+> `spawnmanager`/`basic-gamemode`, und der Core mischt sich nicht ein.
+
 ## Sitzung im laufenden Betrieb
 
 - Der Core hält die Spielerdaten **serverseitig** im Speicher. Der Server ist die Quelle der

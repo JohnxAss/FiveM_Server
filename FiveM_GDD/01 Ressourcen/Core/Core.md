@@ -7,6 +7,20 @@ Resources aufbauen: persistente Spielerdaten, den Lebenszyklus einer Spielsitzun
 gemeinsame Schnittstelle. Er ist bewusst schlank gehalten – ein eigener kleiner Unterbau, kein
 Nachbau von ESX/QBCore.
 
+## Umsetzungsstand
+
+Gebaut ist die **Maschinerie**, nicht das Datenmodell:
+
+- Datenbank-Anbindung über oxmysql inkl. Schema-Prüfung beim Start – siehe [[Datenbank]].
+- `players`-Tabelle (Account, Name, Spielzeit) mit Laden beim Connect und Speichern bei
+  Disconnect, Autosave und Shutdown – siehe [[Spielerverwaltung]].
+- Exports und die Events `core:playerLoaded` / `core:playerDropped` / `core:playerSaved` –
+  siehe [[Schnittstellen]].
+
+Bewusst offen, bis ein echtes Feature es braucht: die `characters`-Tabelle (Geld, Aussehen,
+Position), das Callback-System, Notifications, Logging und das Aufräumen der Welt. Der Rest
+dieses Dokuments beschreibt weiterhin den **Zielzustand**, nicht den Ist-Stand.
+
 ## Faustregel: gehört es in den Core?
 
 Etwas gehört in den Core, wenn **mindestens zwei Features es brauchen** und es sonst doppelt

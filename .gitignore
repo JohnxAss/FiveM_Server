@@ -23,8 +23,11 @@
 
 # server.cfg enthält sv_licenseKey im Klartext -> sensibel, nicht versionieren.
 # Bei Bedarf stattdessen eine server.cfg.example mit Platzhalter-Key committen.
-/txData/FiveMBasicServerCFXDefault_F10FDE.base/server.cfg
-/txData/FiveMBasicServerCFXDefault_F10FDE.base/server.cfg.bkp
+# Bewusst als Wildcard: so rutscht auch keine Sicherungskopie (server.cfg.bkp,
+# server.cfg.vor-xyz-backup, ...) mit dem Lizenzschluessel ins Repo. Die
+# .example ist die einzige Ausnahme.
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/server.cfg*
+!/txData/FiveMBasicServerCFXDefault_F10FDE.base/server.cfg.example
 
 # ---------------------------------------------------------------------------
 # Vorinstallierte/Default-Resources des Deployer-Recipes

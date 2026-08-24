@@ -38,6 +38,11 @@ fehlschlägt.
 - Event `core:dataUpdated` meldet Änderungen, damit die UI nicht pollen muss.
 - Event `core:playerReady` als clientseitiges Gegenstück zu `core:playerLoaded`.
 
+> **Stand:** Umgesetzt sind die Server-Exports `GetPlayer`, `GetPlayerByLicense`,
+> `GetPlayers`, `SavePlayer` und `IsDatabaseReady` sowie die drei Events oben. Der
+> Client-Teil und die Callbacks darunter sind Zielzustand – der Core hat aktuell gar kein
+> Client-Script, weil noch kein Feature danach fragt.
+
 ## Callbacks (Client fragt, Server antwortet)
 
 Ein wiederkehrendes Muster: Der Client braucht eine Information, die nur der Server hat – wie

@@ -58,6 +58,9 @@ Zu `metadata`: praktisch, um kleine Werte ohne Schema-Änderung abzulegen, aber 
 durchsuchbar. Sobald ein Feature seine Daten filtern oder auswerten will, bekommt es eine
 eigene Tabelle.
 
+> **Stand:** Umgesetzt ist bisher nur `players`. Die `characters`-Tabelle ist Zielzustand –
+> sie entsteht erst, wenn das erste Feature tatsächlich etwas davon speichern muss.
+
 ## Speicherstrategie
 
 Gespeichert wird zu drei Zeitpunkten:
