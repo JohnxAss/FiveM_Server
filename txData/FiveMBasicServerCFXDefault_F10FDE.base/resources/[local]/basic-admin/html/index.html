@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>Basic Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="menu" class="hidden">
+        <div class="header">
+            <span class="title">Basic Admin</span>
+            <button id="btn-close" class="icon-btn" title="Schliessen">&times;</button>
+        </div>
+
+        <!-- Ebene 1: Hauptmenue -->
+        <div id="page-main" class="body">
+            <div class="entry" data-action="vehicles">
+                <span class="arrow">&#9656;</span> Fahrzeug spawnen
+            </div>
+            <div class="entry" data-action="teleport">
+                <span class="arrow">&#9656;</span> Teleport zu Markierung
+            </div>
+        </div>
+
+        <!-- Ebene 2: Fahrzeugliste -->
+        <div id="page-vehicles" class="body hidden">
+            <div class="entry back" id="btn-back">
+                <span class="arrow">&#8249;</span> Zurueck
+            </div>
+            <input id="search" type="text" placeholder="Suchen&hellip;" autocomplete="off">
+            <div id="vehicle-list" class="scroll"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,1 +1,0 @@
-Hier werden die Features/Ressourcen für den FiveM Server beschrieben

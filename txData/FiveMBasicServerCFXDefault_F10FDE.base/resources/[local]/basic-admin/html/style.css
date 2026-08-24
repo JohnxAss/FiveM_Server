@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    overflow: hidden;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    user-select: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#menu {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 280px;
+    background: rgba(18, 20, 24, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    color: #e8e8e8;
+    font-size: 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Kopfzeile ---- */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background: rgba(0, 0, 0, 0.35);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px 4px 0 0;
+}
+
+.title {
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: #b9b9b9;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.icon-btn:hover {
+    color: #fff;
+}
+
+/* ---- Body ---- */
+.body {
+    padding: 6px 0;
+}
+
+.entry {
+    padding: 7px 12px;
+    cursor: pointer;
+}
+
+.entry:hover {
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.entry .arrow {
+    color: #7aa2d6;
+    margin-right: 4px;
+}
+
+.entry.back {
+    color: #b9b9b9;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 6px;
+}
+
+/* ---- Suchfeld ---- */
+#search {
+    display: block;
+    width: calc(100% - 24px);
+    margin: 0 12px 6px 12px;
+    padding: 6px 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+    color: #e8e8e8;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+}
+
+#search:focus {
+    border-color: #7aa2d6;
+}
+
+/* ---- Fahrzeugliste ---- */
+.scroll {
+    max-height: 360px;
+    overflow-y: auto;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 3px;
+}
+
+.category {
+    padding: 8px 12px 3px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #7aa2d6;
+}
+
+.vehicle {
+    padding: 5px 12px 5px 20px;
+    cursor: pointer;
+}
+
+.vehicle:hover {
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.vehicle .model {
+    float: right;
+    color: #7c7c7c;
+    font-size: 11px;
+    line-height: 18px;
+}
+
+.empty {
+    padding: 10px 12px;
+    color: #8a8a8a;
+    font-style: italic;
+}
