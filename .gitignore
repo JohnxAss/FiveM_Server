@@ -50,3 +50,12 @@
 # Eigene Hilfslogs (z. B. manuelle Start-Logs außerhalb von txData/default/logs)
 # ---------------------------------------------------------------------------
 *.log
+
+# ---------------------------------------------------------------------------
+# Obsidian-Vault (FiveM_GDD/)
+# ---------------------------------------------------------------------------
+# workspace.json haelt nur den UI-Zustand fest (offene Tabs, Panel-Groessen) und
+# aendert sich bei jedem Oeffnen des Vaults -> staendiger Diff-Laerm, kein Inhalt.
+# Die uebrigen .obsidian/-Dateien (Plugins, Appearance) bleiben bewusst versioniert,
+# damit der Vault bei allen gleich aussieht.
+/FiveM_GDD/.obsidian/workspace.json
