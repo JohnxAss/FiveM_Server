@@ -70,18 +70,45 @@ Stand: 2026-08-24
 ## Für eigene Feature-Entwicklung
 
 - Eigene Resources gehören nach
-  `txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/<resourcename>/`, jeweils mit eigener
-  `fxmanifest.lua`. Danach in der `server.cfg` mit `ensure <resourcename>` aktivieren (siehe
-  bestehende `ensure`-Zeilen als Vorlage).
-  - Noch keine eigene Resource angelegt – reiner Vanilla-Stand (Basis-Set + EasyAdmin) bislang.
+  `txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/[local]/<resourcename>/`, jeweils mit
+  eigener `fxmanifest.lua`. Danach in der `server.cfg` mit `ensure <resourcename>` aktivieren
+  (siehe bestehende `ensure`-Zeilen als Vorlage).
+  - **`[local]/` ist bewusst die Kategorie für eigenen Code** – alle anderen Kategorie-Ordner
+    (`[gameplay]`, `[system]`, …) und `EasyAdmin/` sind Fremdcode und in der `.gitignore`
+    ausgeschlossen. Eine Resource direkt unter `resources/` würde nicht versioniert werden.
+  - Kategorie-Ordner in eckigen Klammern werden von FXServer automatisch durchsucht; der
+    `ensure`-Name ist nur der Resource-Ordnername, ohne die Kategorie.
 - Nach Config-Änderungen (`server.cfg`, neue Resource) reicht ein Server-Neustart; `ensure`/
   `refresh`/`restart <resource>` gehen bei laufendem Server auch direkt über die Server-Konsole
   bzw. txAdmin-Panel, ohne kompletten Neustart – für schnelle Iteration beim Entwickeln nutzen.
+
+### Eigene Resources (Stand)
+
+- **`basic-admin`** – erstes eigenes Feature, dient als Blaupause. Spezifikation im GDD unter
+  `FiveM_GDD/01 Ressourcen/Basic Admin/`. NUI-Menü (`/basicadmin`, dazu ein leeres
+  `RegisterKeyMapping`, Taste selbst zuweisbar) mit Fahrzeug-Spawn und Teleport zum Wegpunkt.
+- Konventionen, die daraus hervorgehen und für weitere Resources gelten sollen:
+  - **Event-Präfix = Resource-Name**, z. B. `basic-admin:spawnVehicle`.
+  - **ACE-Name = Resource-Name ohne Bindestrich**, z. B. `basicadmin`; Vergabe in der
+    `server.cfg` per `add_ace group.admin <ace> allow`.
+  - Berechtigungen werden **serverseitig** mit `IsPlayerAceAllowed` geprüft, nicht im Client.
+    Der Client fragt beim Öffnen beim Server an und bekommt die Daten erst dann geliefert.
+  - Client-seitige Natives (Spawn, Teleport) lassen sich nicht wirklich absichern – der
+    ACE-Check ist eine Hürde gegen normale Spieler, kein Cheat-Schutz. Für das lokale
+    `127.0.0.1`-Setup akzeptiert.
+  - Konfiguration in einer `config.lua` als `shared_script`, damit Client und Server dieselbe
+    Whitelist sehen.
+  - `onResourceStop` immer `SetNuiFocus(false, false)` – sonst hängt nach `restart <resource>`
+    der Mauszeiger fest.
+- Änderungen an der `server.cfg` bitte **parallel in `server.cfg.example` spiegeln** – die
+  echte `server.cfg` ist wegen `sv_licenseKey` gitignored, die `.example` ist der versionierte
+  Stand.
 
 ## Vorsicht / sensible Daten
 
 - `server.cfg` enthält `sv_licenseKey` im Klartext – nicht in öffentliche Repos, Screenshots oder
   Issues teilen.
-- Ordner ist aktuell **kein Git-Repo**. Falls Versionierung gewünscht wird: `txData/*/logs/`,
-  `txData/*/data/` (Player-DB) und `resources/EasyAdmin/backups/` (Ban-Listen-Backups) enthalten
-  Laufzeit-/Nutzerdaten und gehören eher in eine `.gitignore` als versioniert.
+- Der Ordner **ist inzwischen ein Git-Repo** (Branch `main`). Die `.gitignore` schließt bereits
+  aus: den FXServer-Build (`/server/`), txAdmin-Logs/Player-DB, `txData/admins.json`
+  (Passwort-Hash), die `server.cfg` selbst (Lizenzschlüssel) sowie alle Fremd-Resources.
+  Neue Fremd-Resource-Kategorien dort ergänzen; eigener Code gehört nach `[local]/`.

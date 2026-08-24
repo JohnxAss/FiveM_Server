@@ -48,6 +48,9 @@ ensure basic-gamemode
 ensure hardcap
 ensure EasyAdmin
 
+## Eigene Resources ([local]/)
+ensure basic-admin
+
 ## Add system admins
 add_ace group.admin command allow # allow all commands
 add_ace group.admin command.quit deny # but don't allow aquit
@@ -55,3 +58,4 @@ add_ace group.admin command.quit deny # but don't allow aquit
 add_principal identifier.fivem:<DEINE_FIVEM_ID> group.admin #<DeinName>
 #add_principal identifier.steam:<DEINE_STEAM_ID> group.admin #<DeinName>
 add_ace group.admin easyadmin allow
+add_ace group.admin basicadmin allow
