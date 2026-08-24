@@ -40,6 +40,7 @@
 # Achtung: "[" und "]" sind in .gitignore Zeichenklassen-Syntax -> müssen
 # escaped werden, sonst greift das Pattern nicht (mit git status geprüft).
 /txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/EasyAdmin/
+/txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/oxmysql/
 /txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/\[gamemodes\]/
 /txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/\[gameplay\]/
 /txData/FiveMBasicServerCFXDefault_F10FDE.base/resources/\[managers\]/

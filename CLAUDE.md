@@ -87,6 +87,12 @@ Stand: 2026-08-24
 - **`basic-admin`** – erstes eigenes Feature, dient als Blaupause. Spezifikation im GDD unter
   `FiveM_GDD/01 Ressourcen/Basic Admin/`. NUI-Menü (`/basicadmin`, dazu ein leeres
   `RegisterKeyMapping`, Taste selbst zuweisbar) mit Fahrzeug-Spawn und Teleport zum Wegpunkt.
+- **`core`** – *geplant, noch nicht implementiert.* Unterbau für alle weiteren Features:
+  Datenbank-Anbindung, Spielerdaten (Laden/Speichern/Autosave) und die gemeinsamen
+  Exports/Events/Callbacks. Spezifikation im GDD unter `FiveM_GDD/01 Ressourcen/Core/`.
+  Faustregel dort: etwas gehört nur in den Core, wenn mindestens zwei Features es brauchen
+  **oder** es genau einen Besitzer haben muss (z. B. Schreibzugriff auf die Spielerzeile in
+  der DB). Kein eigenes UI, kein Gameplay.
 - Konventionen, die daraus hervorgehen und für weitere Resources gelten sollen:
   - **Event-Präfix = Resource-Name**, z. B. `basic-admin:spawnVehicle`.
   - **ACE-Name = Resource-Name ohne Bindestrich**, z. B. `basicadmin`; Vergabe in der
@@ -104,10 +110,31 @@ Stand: 2026-08-24
   echte `server.cfg` ist wegen `sv_licenseKey` gitignored, die `.example` ist der versionierte
   Stand.
 
+## Datenbank (geplant, mit `core`)
+
+- **MariaDB/MySQL** lokal, Zugriff über die Fremd-Resource **`oxmysql`**. Noch nicht
+  installiert – kommt zusammen mit der `core`-Resource.
+- **Nur der Core spricht mit der Datenbank.** Feature-Resources rufen `oxmysql` nicht direkt
+  auf und schreiben kein eigenes SQL, sondern gehen über die Core-Exports. Grund: zwei
+  Resources, die unabhängig dieselbe Spielerzeile schreiben, überschreiben sich gegenseitig.
+- Verbindungsstring in der `server.cfg` als `set mysql_connection_string "mysql://…"`; in der
+  `server.cfg.example` steht ein Platzhalter (enthält Zugangsdaten, s. u.).
+- **Start-Reihenfolge in der `server.cfg` ist relevant:** `oxmysql` → `core` →
+  Feature-Resources. Feature-Resources setzen zusätzlich `dependency 'core'` in ihre
+  `fxmanifest.lua`.
+- `oxmysql` ist Fremdcode und liegt direkt unter `resources/` (nicht in `[local]/`); der Pfad
+  ist bereits in der `.gitignore` eingetragen.
+- Schema-Änderungen als neue, nummerierte `.sql`-Datei in der Resource ablegen statt die
+  bestehende zu ändern – sonst ist nicht nachvollziehbar, auf welchem Stand eine vorhandene
+  Datenbank ist. Einspielen vorerst von Hand.
+
 ## Vorsicht / sensible Daten
 
 - `server.cfg` enthält `sv_licenseKey` im Klartext – nicht in öffentliche Repos, Screenshots oder
   Issues teilen.
+- Sobald die Datenbank dazukommt: `mysql_connection_string` enthält DB-Benutzer und -Passwort
+  im Klartext – gehört nur in die (gitignorete) `server.cfg`, in der `.example` bleibt der
+  Platzhalter stehen.
 - Der Ordner **ist inzwischen ein Git-Repo** (Branch `main`). Die `.gitignore` schließt bereits
   aus: den FXServer-Build (`/server/`), txAdmin-Logs/Player-DB, `txData/admins.json`
   (Passwort-Hash), die `server.cfg` selbst (Lizenzschlüssel) sowie alle Fremd-Resources.
